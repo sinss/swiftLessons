@@ -10,16 +10,18 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var textField: UITextView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        //test()
-        封裝()
-        //optionalTest()
+//        test()
+//        封裝()
+//        optionalTest()
 //        switchTest()
 //        arrayNormal()
-        //arrayAdvanced()
+//        arrayAdvanced()
 //        arrayAdvanced2()
-//        dictionary()
+        dictionary()
         // Do any additional setup after loading the view, typically from a nib.
     }
 
@@ -83,7 +85,7 @@ class ViewController: UIViewController {
     public class A {
         private var strA: String
         fileprivate var intB: Int?
-        
+        fileprivate var instancA: A?
         //Compile時會自動，預設產生的
         required public init() {
             self.strA = ""
@@ -93,12 +95,11 @@ class ViewController: UIViewController {
     struct B {
         var strA: String
         var intB: Int
-        
-        //Compile時會動產生
-        init(strA: String, intB: Int) {
-            self.strA = ""
-            self.intB = 0
-        }
+//        //Compile時會動產生
+//        init(strA: String, intB: Int) {
+//            self.strA = ""
+//            self.intB = 0
+//        }
     }
     
     func 封裝() {
@@ -111,17 +112,22 @@ class ViewController: UIViewController {
          open       : 最高層級，就是Java語言的  public
          */
         
-        let objA = A()
-        let int = objA.intB
-        
+        let objA: A? = A()
+        //let int = objA.intB
         let structB = B(strA: "", intB: 0)
-        
         let valueB = structB.intB
     }
     
-    var textField: UITextField? = UITextField()
+    var textField2: UITextField? = UITextField()
     
     func optionalTest() {
+        let string = textField?.text
+        let string2 = textField2?.text
+        if let string = textField2?.text {
+            print(string)
+        }
+        print("\(string)")
+        print("\(string2)")
         let optionString: String? = "I am a optional string"
         print(optionString!)
         
@@ -148,8 +154,9 @@ class ViewController: UIViewController {
     
     func switchTest() {
         let a = "10"
-        let b = 2
+        let b = 2.5
         let c = 90
+        
         switch a {
         case "1":
             break
@@ -188,9 +195,12 @@ class ViewController: UIViewController {
             break
         }
         
+        if b < 10 , b > 0 {
+            
+        }
         //advanced
         switch (a, b) {
-            case ("1", 0):
+            case ("1", 0...10):
             print("")
         case ("10", 2):
             print("a , b is correct")
@@ -204,8 +214,10 @@ class ViewController: UIViewController {
      dictionary
      */
     func arrayNormal() {
-        let strings = ["Anna", "Alex", "Brian", "Jack", "Leo"]
+        let strings: [String] = ["Anna", "Alex", "Brian", "Jack", "Leo"]
         let ints = [1, 2, 3, 4, 5, 6]
+        let reversedInt = ints.reversed()
+        print(reversedInt)
         //: 傳統方法
         for i in 0..<strings.count {
             print(strings[i])
@@ -224,7 +236,11 @@ class ViewController: UIViewController {
     func arrayAdvanced() {
         let items: [Any] = ["Anna", "Alex", "Brian", 10, 20]
         print(items)
-        
+        for item in items {
+            if item is String {
+                
+            }
+        }
         for case let item as String in items {
             print(item)
         }
@@ -237,7 +253,7 @@ class ViewController: UIViewController {
     func arrayAdvanced2() {
         let strings = ["Anna", "Alex", "Brian", "Jack", "Leo"]
         print(strings)
-        let matchedStrings = strings.filter { $0.contains("A") }
+        let matchedStrings = strings.filter { $0 == "Anna" }
         print(matchedStrings)
         let ints = [9, 98 , 7, 96 , 45 , 4 , 93 , 102, 1001, 99]
         print(ints)
@@ -251,7 +267,7 @@ class ViewController: UIViewController {
             var name: String
             var age: Int
         }
-        let items = [User(name: "Anna", age: 10), User(name: "Alex", age: 20), User(name: "Brian", age: 30), User(name: "Jack", age: 40), User(name: "Leo", age: 32)]
+        let items: Array<User> = [User(name: "Anna", age: 10), User(name: "Alex", age: 20), User(name: "Brian", age: 30), User(name: "Jack", age: 40), User(name: "Leo", age: 32)]
         let filtered = items.filter { $0.name.contains("A") }
         for item in filtered {
             print("name: \(item.name), age: \(item.age)")
@@ -268,7 +284,8 @@ class ViewController: UIViewController {
     }
     
     func dictionary() {
-        let dict = ["key1": "value1", "key2": "value2", "key3": "value3"]
+        let nsdiction: NSDictionary
+        let dict: [String: Any] = ["key1": "value1", "key2": "value2", "key3": 10]
         print(dict["key2"])
         
         for case let (key, value) as (String, Int) in dict {
